@@ -13,8 +13,7 @@ int main() {
 
     do {
         WordHolder word;
-        fin >> word.word;
-        word.length = strlen(word.word);
+        fin >> word;
         words.addWord(word);
     } while (!fin.eof());
 
@@ -24,5 +23,6 @@ int main() {
         words[i].shuffle();
     }
     cout << words;
+
     return 0;
 }

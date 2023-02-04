@@ -1,6 +1,7 @@
 #ifndef ALL_WORDS_92836423
 #define ALL_WORDS_92836423
-
+#include <iostream>
+#include <fstream>
 using namespace std;
 
 struct WordHolder{
@@ -9,6 +10,7 @@ struct WordHolder{
         char* shuffled;
         WordHolder();
         friend ostream& operator<<(ostream& out, const WordHolder& word);
+        friend ifstream& operator>>(ifstream& in, WordHolder& word);
         void shuffle();
 
 };

@@ -1,4 +1,5 @@
 #include <iostream>
+#include <fstream>
 #include <string.h>
 #include "allwords.h"
 
@@ -12,6 +13,11 @@ WordHolder::WordHolder() {
 ostream& operator<<(ostream& out, const WordHolder& word){
     out << "W:" << word.word << " S:" << word.shuffled << " L:" << word.length << endl;
     return out;
+}
+ifstream& operator>>(ifstream& in, WordHolder& obj){
+    in >> obj.word;
+    obj.length = strlen(obj.word);
+    return in;
 }
 
 void WordHolder::shuffle() {
