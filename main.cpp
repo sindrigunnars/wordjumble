@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <string.h>
+#include <time.h>
 
 using namespace std;
 
@@ -24,7 +25,18 @@ int main() {
     } while (!fin.eof());
 
     for (int i = 0; i < numwrds; i++) {
-        cout << words[i].word << ": " << words[i].length << endl;
+        srand(time(NULL));
+        const int len = words[i].length;
+        char shuffled[128];
+        strcpy(shuffled, words[i].word);
+        for (int j = 0; j < len; j++) {
+            int place1 = rand() % len;
+            int place2 = rand() % len;
+            char temp = shuffled[place1];
+            shuffled[place1] = shuffled[place2];
+            shuffled[place2] = temp;
+        }
+        cout << words[i].word << ": " << shuffled << endl;
     }
 
     delete[] words;
