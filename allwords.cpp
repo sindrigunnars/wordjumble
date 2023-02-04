@@ -2,6 +2,7 @@
 #include <fstream>
 #include <string.h>
 #include "allwords.h"
+#define DEBUG false
 
 using namespace std;
 
@@ -11,23 +12,49 @@ WordHolder::WordHolder() {
 }
 
 ostream& operator<<(ostream& out, const WordHolder& word){
-    out << "W:" << word.word << " S:" << word.shuffled << " L:" << word.length << endl;
+    if (DEBUG) {
+        out << "W:" << word.word << " S:" << word.shuffled << endl;
+    } else {
+        out << word.shuffled << endl;
+    }
     return out;
 }
 ifstream& operator>>(ifstream& in, WordHolder& obj){
     in >> obj.word;
     obj.length = strlen(obj.word);
+    obj.list = new int[obj.length];
+    obj.shuffle();
     return in;
 }
 
 void WordHolder::shuffle() {
     strcpy(shuffled, word);
+    do {
+        for (int j = 0; j < length; j++) {
+            int place1 = rand() % length;
+            int place2 = rand() % length;
+            char temp = shuffled[place1];
+            shuffled[place1] = shuffled[place2];
+            shuffled[place2] = temp;
+        }
+    } while(strcmp(word, shuffled) == 0);
+}
+void WordHolder::unshuffle() {
+    int new_shuffle;
+    while (true) {
+        new_shuffle = rand() % length;
+        if ((word[new_shuffle] != shuffled[new_shuffle]) || (strcmp(word, shuffled) == 0)) {
+            break;
+        }
+    }
+    list[new_shuffle] = 1;
+    char correct = word[new_shuffle];
     for (int j = 0; j < length; j++) {
-        int place1 = rand() % length;
-        int place2 = rand() % length;
-        char temp = shuffled[place1];
-        shuffled[place1] = shuffled[place2];
-        shuffled[place2] = temp;
+        if (correct == shuffled[j]) {
+            shuffled[j] = shuffled[new_shuffle];
+            shuffled[new_shuffle] = correct;
+            break;
+        }
     }
 }
 
