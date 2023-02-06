@@ -15,14 +15,30 @@ ostream& operator<<(ostream& out, const WordHolder& word){
     if (DEBUG) {
         out << "W:" << word.word << " S:" << word.shuffled << endl;
     } else {
-        out << word.shuffled << endl;
+        out << "\n\t";
+        for (int i = 0; i < word.length-1; i++) {
+            out << word.shuffled[i] << "-";
+        }
+        out << word.shuffled[word.length-1] << endl << "\t";
+        for (int i = 0; i < word.length-1; i++) {
+            if (word.word[i] == word.shuffled[i]) {
+                out << word.shuffled[i] << "-";
+            } else {
+                out << "X" << "-";
+            }
+        }
+        if (word.word[word.length-1] == word.shuffled[word.length-1]) {
+            out << word.shuffled[word.length-1] << endl;;
+        } else {
+            out << "X" << endl;
+        }
+        
     }
     return out;
 }
 ifstream& operator>>(ifstream& in, WordHolder& obj){
     in >> obj.word;
     obj.length = strlen(obj.word);
-    obj.list = new int[obj.length];
     obj.shuffle();
     return in;
 }
@@ -38,7 +54,16 @@ void WordHolder::shuffle() {
             shuffled[place2] = temp;
         }
     } while(strcmp(word, shuffled) == 0);
+    bool flag = true;
+    for (int i = 0; i < length; i++) {
+        if (word[i] == shuffled[i]) {
+            flag = false;
+            break;
+        }
+    }
+    if (flag) {unshuffle();}
 }
+
 void WordHolder::unshuffle() {
     int new_shuffle;
     while (true) {
@@ -47,7 +72,6 @@ void WordHolder::unshuffle() {
             break;
         }
     }
-    list[new_shuffle] = 1;
     char correct = word[new_shuffle];
     for (int j = 0; j < length; j++) {
         if (correct == shuffled[j]) {

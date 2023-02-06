@@ -8,7 +8,6 @@ struct WordHolder{
         int length, times_unshuffled;
         char* word;
         char* shuffled;
-        int *list;
         WordHolder();
         friend ostream& operator<<(ostream& out, const WordHolder& word);
         friend ifstream& operator>>(ifstream& in, WordHolder& word);
