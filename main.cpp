@@ -4,6 +4,7 @@
 #include <time.h>
 #include <math.h>
 #include "allwords.h"
+#include "leaderboard.h"
 
 using namespace std;
 
@@ -35,6 +36,7 @@ int main() {
             time(&begin);
             do {
                 cout << "\nJumbled word: " << shuffled_word  << endl;
+                cout << "You have " << points - 1 << " hints left" << endl;
                 cout << "Your guess(lower case)\n\t(h) for hint:";
                 cin >> input;
 
@@ -45,6 +47,7 @@ int main() {
 
                 if (strcmp(shuffled_word.shuffled, shuffled_word.word) == 0) {
                     cout << "\nOOPS!! Too many hints, the word was: " << shuffled_word.word << endl << endl;
+                    points++;
                     shuffled_word = words.getWord(rand() % words.getSize());
                 }
                 

@@ -35,30 +35,4 @@ class AllWords{
         void resize();
 };
 
-
-struct Score {
-    int score;
-    char* name;
-    Score();
-    friend ifstream& operator>>(ifstream& in, Score& score);
-    friend ofstream& operator<<(ofstream& out, Score& score);
-};
-
-class Leaderboard{
-    public:
-        Leaderboard();
-
-        void addScore(const Score& score);
-        void top5();
-        void all();
-
-        Score operator[](int idx);
-
-    private:
-        int capacity, size;
-        Score *scores;
-        
-        void resize();
-};
-
 #endif //STAT_LIST_92836423

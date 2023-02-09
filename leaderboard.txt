@@ -12,3 +12,6 @@ danni 16
 h 0
 oppa 0
 ios 0
+ssg 0
+siops 0
+oppas 20
