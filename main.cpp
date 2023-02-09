@@ -2,6 +2,7 @@
 #include <fstream>
 #include <string.h>
 #include <time.h>
+#include <math.h>
 #include "allwords.h"
 
 using namespace std;
@@ -9,6 +10,8 @@ using namespace std;
 int main() {
     srand(time(NULL));
     ifstream fin;
+    ofstream fout;
+    fout.open("leaderboard.txt", ios_base::app);
     fin.open("words.txt", ios::in);
     AllWords words;
 
@@ -18,38 +21,81 @@ int main() {
         words.addWord(word);
     } while (!fin.eof());
 
-    cout << "Welcome to word jumble!!" << endl;
-    char *input = new char[128];
-    int points = 10;
-    int correct = 0;
-    WordHolder shuffled_word = words.getWord(rand() % words.getSize());
+    char *choice = new char[128];
+
     do {
-        cout << "Jumbled word: " << shuffled_word  << endl;
-        cout << "Your guess(lower case)\n\t(h) for hint\n\t(q) for quit: ";
-        cin >> input;
+        cout << "Welcome to word jumble!!\n\tPress (p) to play:\n\tPress (l) for leaderboeard:\n\tPress (q) to quit:" << endl;
+        cin >> choice;
+        if (strcmp(choice, "p") == 0) {
+            int points = 10;
+            int correct = 0;
+            char *input = new char[128];
+            WordHolder shuffled_word = words.getWord(rand() % words.getSize());
+            time_t end, begin;
+            time(&begin);
+            do {
+                cout << "\nJumbled word: " << shuffled_word  << endl;
+                cout << "Your guess(lower case)\n\t(h) for hint:";
+                cin >> input;
 
-        if (strcmp(input, "h") == 0) {
-            shuffled_word.unshuffle();
-            points--;
+                if (strcmp(input, "h") == 0) {
+                    shuffled_word.unshuffle();
+                    points--;
+                }
+
+                if (strcmp(shuffled_word.shuffled, shuffled_word.word) == 0) {
+                    cout << "\nOOPS!! Too many hints, the word was: " << shuffled_word.word << endl << endl;
+                    shuffled_word = words.getWord(rand() % words.getSize());
+                }
+                
+                if (strcmp(input, shuffled_word.word) == 0) {
+                    cout << "Congrats!!" << endl << endl;
+                    correct++;
+                    shuffled_word = words.getWord(rand() % words.getSize());
+                }
+
+                if (points == 0) {
+                    time(&end);
+                    cout << "check";
+                    int score;
+                    int diff = (int)(end - begin);
+                    if (correct < 1) {score = 0;}
+                    else {score = (int)(correct*10) / (diff/10);}
+
+                    cout << "\nGame Over!!" << endl << "You guessed " << correct << " words in " << diff << " seconds" << endl;
+                    cout << "Your score is " << score << endl;
+                    char *name = new char[32];
+                    cout << "Enter your name: ";
+                    cin >> name;
+                    Score savescore;
+                    savescore.name = name;
+                    savescore.score = score;
+                    fout << savescore;
+                    fout.close();
+                    break;
+                }
+
+            } while(true);
+        }
+        if (strcmp(choice, "l") == 0) {
+            ifstream fin1;
+            fin1.open("leaderboard.txt", ios::in);
+            Leaderboard lead;
+
+            while (true){
+                Score score;
+                fin1 >> score;
+                if (fin1.eof()) {break;}
+                lead.addScore(score);
+            }
+            fin1.close();
+            cout << "\tPress (t) for top 5:\n\tPress (a) for all:" << endl;
+            cin >> choice;
+            if (strcmp(choice, "t") == 0) {lead.top5();}
+            else if (strcmp(choice, "a") == 0) {lead.all();}
         }
 
-        if (strcmp(shuffled_word.shuffled, shuffled_word.word) == 0) {
-            cout << "OOPS!! Too many hints, the word was: " << shuffled_word.word << endl << endl;
-            shuffled_word = words.getWord(rand() % words.getSize());
-        }
-        
-        if (strcmp(input, shuffled_word.word) == 0) {
-            cout << "Congrats!!" << endl << endl;
-            correct++;
-            shuffled_word = words.getWord(rand() % words.getSize());
-        }
-
-        if (points == 0) {
-            cout << "Game Over!!" << endl << "You guessed " << correct << " words" << endl;
-            break;
-        }
-
-    } while(strcmp(input, "q") != 0);
-
+    } while(strcmp(choice, "q") != 0);
+    fin.close();
     return 0;
 }

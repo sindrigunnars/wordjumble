@@ -1,0 +1,6 @@
+ssg 10
+ssg 10
+shs 30
+dda 40
+ops 10
+ups 0
