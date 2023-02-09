@@ -27,7 +27,7 @@ int main() {
         cout << "Welcome to word jumble!!\n\tPress (p) to play:\n\tPress (l) for leaderboeard:\n\tPress (q) to quit:" << endl;
         cin >> choice;
         if (strcmp(choice, "p") == 0) {
-            int points = 10;
+            int points = 11;
             int correct = 0;
             char *input = new char[128];
             WordHolder shuffled_word = words.getWord(rand() % words.getSize());
@@ -58,6 +58,7 @@ int main() {
                     time(&end);
                     int score;
                     int diff = (int)(end - begin);
+                    if (diff < 10) {diff = 10;}
                     if (correct < 1) {score = 0;}
                     else {score = (int)(correct*10) / (diff/10);}
 

@@ -120,12 +120,12 @@ AllWords::~AllWords(){
 void AllWords::resize() {
     WordHolder *tmp_arr = new WordHolder[capacity * 2];
     for(int i = 0; i < size; i++){
-        tmp_arr[i] = words[i];            }
+        tmp_arr[i] = words[i];
+    }
     delete[] words;
     words = tmp_arr;
     capacity *= 2;
 }
-
 
 Score::Score() {
     name = new char[32];
@@ -156,7 +156,7 @@ void Leaderboard::addScore(const Score& score) {
     for (; idx < size; idx++) {
         if (scores[idx].score < score.score) {break;}
     }
-    for (int i = size; idx < i; i--) {
+    for (int i = size-1; idx <= i; i--) {
         scores[i+1] = scores[i];
     }
     scores[idx] = score;

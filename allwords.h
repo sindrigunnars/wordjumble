@@ -47,13 +47,17 @@ struct Score {
 class Leaderboard{
     public:
         Leaderboard();
+
         void addScore(const Score& score);
         void top5();
         void all();
+
         Score operator[](int idx);
+
     private:
         int capacity, size;
         Score *scores;
+        
         void resize();
 };
 

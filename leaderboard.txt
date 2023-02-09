@@ -3,4 +3,11 @@ ssg 10
 shs 30
 dda 40
 ops 10
-ups 0
+ups 20
+sindri 10
+sindri 20
+sindri 32759
+sindri 10
+danni 16
+h 0
+oppa 0
