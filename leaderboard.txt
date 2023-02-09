@@ -11,3 +11,4 @@ sindri 10
 danni 16
 h 0
 oppa 0
+ios 0

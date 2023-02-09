@@ -24,7 +24,7 @@ int main() {
     char *choice = new char[128];
 
     do {
-        cout << "Welcome to word jumble!!\n\tPress (p) to play:\n\tPress (l) for leaderboeard:\n\tPress (q) to quit:" << endl;
+        cout << "\nWelcome to word jumble!!\n\tPress (p) to play:\n\tPress (l) for leaderboeard:\n\tPress (q) to quit:" << endl;
         cin >> choice;
         if (strcmp(choice, "p") == 0) {
             int points = 11;
@@ -65,7 +65,7 @@ int main() {
                     cout << "\nGame Over!!" << endl << "You guessed " << correct << " words in " << diff << " seconds" << endl;
                     cout << "Your score is " << score << endl;
                     char *name = new char[32];
-                    cout << "Enter your name: ";
+                    cout << "Enter your name (no spaces): ";
                     cin >> name;
                     Score savescore;
                     savescore.name = name;
