@@ -49,14 +49,13 @@ int main() {
                 }
                 
                 if (strcmp(input, shuffled_word.word) == 0) {
-                    cout << "Congrats!!" << endl << endl;
+                    cout << "\nCongrats!!" << endl;
                     correct++;
                     shuffled_word = words.getWord(rand() % words.getSize());
                 }
 
                 if (points == 0) {
                     time(&end);
-                    cout << "check";
                     int score;
                     int diff = (int)(end - begin);
                     if (correct < 1) {score = 0;}
